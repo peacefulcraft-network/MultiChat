@@ -5,7 +5,11 @@
 
 	<groupId>xyz.olivermartin.multichat</groupId>
 	<artifactId>multichat</artifactId>
-	<version>1.9.6</version>
+	<version>1.9.7</version>
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  </properties>
 
 	<repositories>
 
@@ -16,7 +20,7 @@
 
 		<repository>
 			<id>sponge</id>
-			<url>http://repo.spongepowered.org/maven</url>
+			<url>https://repo.spongepowered.org/maven</url>
 		</repository>
 
 		<repository>
@@ -31,12 +35,12 @@
 
 		<repository>
 			<id>vault-repo</id>
-			<url>http://nexus.hc.to/content/repositories/pub_releases</url>
+			<url>https://nexus.hc.to/content/repositories/pub_releases</url>
 		</repository>
 
 		<repository>
 			<id>placeholderapi</id>
-			<url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+			<url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
 		</repository>
 
 		<repository>
@@ -47,8 +51,8 @@
 	</repositories>
 
 	<build>
-		<plugins>
-			<plugin>
+ 		<plugins>
+<!--			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>3.1.0</version>
@@ -72,15 +76,41 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
+			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>3.2.4</version>
+					<executions>
+						<execution>
+								<phase>package</phase>
+								<goals>
+										<goal>shade</goal>
+								</goals>
+								<configuration>
+										<createDependencyReducedPom>false</createDependencyReducedPom>
+										<relocations>
+											<relocation>
+												<pattern>com.zaxxer.hikari</pattern>
+												<shadedPattern>xyz.olivermartin.shadedlib.hikari</shadedPattern>
+											</relocation>
+											<relocation>
+												<pattern>org.slf4j</pattern>
+												<shadedPattern>xyz.olivermartin.shadedlib.slf4j</shadedPattern>
+											</relocation>
+										</relocations>
+								</configuration>
+						</execution>
+					</executions>
+        </plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.7.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>11</source>
+					<target>11</target>
 				</configuration>
 			</plugin>
 		</plugins>

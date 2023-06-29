@@ -150,11 +150,13 @@ public class Channel {
 							if ( (whitelistServers && servers.contains(receiver.getServer().getInfo().getName())) || (!whitelistServers && !servers.contains(receiver.getServer().getInfo().getName()))) {
 
 								if (!ChatControl.ignores(sender.getUniqueId(), receiver.getUniqueId(), "global_chat")) {
-									if (!receiver.getServer().getInfo().getName().equals(sender.getServer().getInfo().getName())) {
-										receiver.sendMessage(buildFormat(sender,receiver,format,message));
-									} else {
-										// If they are on the same server, this message will already have been displayed locally.
-									}
+									// send all messages everywhere
+									receiver.sendMessage(buildFormat(sender,receiver,format,message));
+									// if (!receiver.getServer().getInfo().getName().equals(sender.getServer().getInfo().getName())) {
+										
+									// } else {
+									// 	// If they are on the same server, this message will already have been displayed locally.
+									// }
 								} else {
 									ChatControl.sendIgnoreNotifications(receiver, sender, "global_chat");
 								}

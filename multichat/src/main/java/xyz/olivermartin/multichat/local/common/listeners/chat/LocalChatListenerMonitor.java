@@ -24,13 +24,15 @@ public abstract class LocalChatListenerMonitor {
 		// IF ITS ALREADY CANCELLED WE CAN IGNORE IT
 		if (event.isCancelled()) return;
 
-		MultiChatLocal.getInstance().getConsoleLogger().debug("#CHAT@MONITOR - The message isn't cancelled!");
+		MultiChatLocal.getInstance().getConsoleLogger().debug("#CHAT@MONITOR - The message isn't cancelled! We will cancel it.");
+		event.setCancelled(true);
 
 		// IF ITS LOCAL CHAT WE CAN IGNORE IT
-		if (!chatManager.isGlobalChatServer() || channel.equalsIgnoreCase("local")) {
-			MultiChatLocal.getInstance().getConsoleLogger().debug("#CHAT@MONITOR - We are speaking into local chat, so at this point we are returning! Bye!");
-			return;
-		}
+		// Don't ignore local chat. We are co-opting local chat
+		// if (!chatManager.isGlobalChatServer() || channel.equalsIgnoreCase("local")) {
+		// 	MultiChatLocal.getInstance().getConsoleLogger().debug("#CHAT@MONITOR - We are speaking into local chat, so at this point we are returning! Bye!");
+		// 	return;
+		// }
 
 		// IF WE ARE MANAGING GLOBAL CHAT THEN WE NEED TO MANAGE IT!
 
